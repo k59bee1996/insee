@@ -1,0 +1,32 @@
+@import "../../../themes/@fuse/scss/fuse";
+
+location-dialog {
+  .location-product-table {
+    overflow-y: auto;
+    //max-height: 363px;
+    table {
+      margin-bottom: 0;
+      width: 100%;
+      //border-spacing: 0;
+      th {
+        white-space: nowrap;
+        font-weight: 500;
+        padding: 3px 5px;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      }
+      td {
+        padding: 2px 5px;
+        input {
+          //width: 100px;
+          height: 21px;
+          border: 1px solid #ccc;
+        }
+        input:disabled {
+          border: none;
+          background-color: #fff;
+        }
+      }
+    }
+  }
+
+}

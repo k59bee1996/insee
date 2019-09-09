@@ -1,0 +1,79 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title" *ngIf="id">{{'WAREHOUSE.EDITWAREHOUSE' | translate}}</span>
+      <span class="title dialog-title" *ngIf="!id">{{'WAREHOUSE.ADDWAREHOUSE' | translate}}</span>
+      <button mat-button class="mat-icon-button" (click)="dialogRef.close(false)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div mat-dialog-content fusePerfectScrollbar>
+    <form name="frm" [formGroup]="frm" class="w-100-p">
+
+      <mat-form-field class="w-100-p">
+        <input matInput name="name" formControlName="name" placeholder="{{'WAREHOUSE.NAME' | translate}}" required>
+        <mat-error *ngIf="formErrors.name">
+          {{formErrors.name}}
+        </mat-error>
+      </mat-form-field>
+      <div class='w-100-p' fxLayout="row" fxLayout.sm='row wrap'>
+        <div fxFlex='50' fxFlex.sm="100" class='mr-8'>
+          <mat-form-field class="w-100-p">
+            <mat-select placeholder="{{'WAREHOUSE.AREA' | translate}}" formControlName="areaId">
+              <mat-option *ngFor="let a of areaList" [value]="a.id" [innerHTML]='a.name'></mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxFlex='50' fxFlex.sm="100">
+          <mat-form-field class="w-100-p">
+            <input matInput name="acreage" formControlName="acreage" placeholder="{{'COMMON.ACREAGE' | translate}}">
+            <span matSuffix>m<sup>2</sup></span>
+          </mat-form-field>
+        </div>
+      </div>
+      <!--<mat-form-field class="w-100-p">-->
+        <!--<mat-select name='warehouseStatusId' formControlName='warehouseStatusId' placeholder="{{'WAREHOUSE.STATUS' | translate}}">-->
+          <!--<mat-option *ngFor='let s of statusList' [value]='s.id'>{{s.name}}</mat-option>-->
+        <!--</mat-select>-->
+      <!--</mat-form-field>-->
+      <div class='w-100-p' fxLayout="row" fxLayout.sm='row wrap'>
+        <div fxFlex='50' fxFlex.sm="100" class='mr-8'>
+          <mat-form-field class="w-100-p">
+            <input type='number' matInput name="temperature" formControlName="temperature" placeholder="{{'COMMON.TEMPERATURE' | translate}}">
+            <span matSuffix>℃</span>
+          </mat-form-field>
+        </div>
+        <div fxFlex='50' fxFlex.sm="100">
+          <mat-form-field class="w-100-p">
+            <input type='number' min='0' matInput name="humidity" formControlName="humidity" placeholder="{{'COMMON.HUMIDITY' | translate}}">
+            <span matSuffix>%</span>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-form-field class="w-100-p" [style.display]='isAdmin ? "block" : "none"'>
+        <input matInput name="points" formControlName="points" placeholder="{{'COMMON.POINTS' | translate}}">
+      </mat-form-field>
+
+      <div class="custom-form-field">
+        <label>{{'COMMON.IMAGE' | translate}}</label>
+        <uploader [url]="'/pictures/upload'" (onUploaded)="uploadImage($event)" buttonText='COMMON.UPLOAD' accept='image/*'></uploader>
+      </div>
+
+      <div class='w-100-p text-center' *ngIf='frm.get("imageUrl").value'>
+        <img [src]='domain + frm.get("imageUrl").value' />
+      </div>
+
+    </form>
+  </div>
+  <div mat-dialog-actions fxLayoutAlign='space-between'>
+    <div fxFlexAlign='start'>
+      <button mat-raised-button class="mat-accent" (click)="save()"
+              [disabled]="frm.invalid || (frm.pristine && id)"
+              promise-btn [promiseButton]="saveOb">{{'COMMON.SAVE' | translate}}</button>
+      <button mat-raised-button class='mat-secondary-bg' (click)="dialogRef.close(false)">{{'COMMON.CLOSE' | translate}}</button>
+    </div>
+    <button mat-raised-button class='mat-warn-bg' (click)="delete()" *ngIf='id' fxFlexAlign='end'
+            promise-btn [promiseButton]="saveOb">{{'COMMON.DELETE' | translate}}</button>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div class="page-layout carded fullwidth profile-page" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div class="my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">person</mat-icon>
+        <span class="h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'USER.MYPROFILE' | translate}}</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- BUTTONS -->
+      <div>
+        <button mat-raised-button class="mat-light-green-bg" (click)="edit()">
+          <span>{{'COMMON.EDIT' | translate}}</span>
+        </button>
+      </div>
+      <!-- / BUTTONS -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content mat-white-bg mat-elevation-z4">
+
+      <form name="frm" [formGroup]="frm" class="w-100-p" fxLayout="column" fxFlex>
+
+        <mat-tab-group>
+
+          <mat-tab label="{{'COMMON.GENERALINFORMATION' | translate}}">
+            <div class="tab-content p-24" fusePerfectScrollbar>
+
+              <div fxLayout="row" [fxLayout.lt-md]="'row wrap'" class="w-100-p">
+                <div fxFlex='1 1 auto'>
+                  <mat-form-field class="w-100-p">
+                    <input matInput name="username" formControlName="username" placeholder="{{'USER.USERNAME' | translate}}" required>
+                    <mat-icon class="mr-8" matPrefix>account_circle</mat-icon>
+                    <mat-error *ngIf="formErrors.username">
+                      {{formErrors.username}}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="w-100-p">
+                    <input matInput name="fullName" formControlName="fullName" placeholder="{{'USER.FULLNAME' | translate}}">
+                    <mat-icon class="mr-8" matPrefix>label</mat-icon>
+                    <mat-error *ngIf="formErrors.fullName">
+                      {{formErrors.fullName}}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="w-100-p">
+                    <input matInput name="email" formControlName="email" placeholder="{{'USER.EMAIL' | translate}}">
+                    <mat-icon class="mr-8" matPrefix>email</mat-icon>
+                    <mat-error *ngIf="formErrors.email">
+                      {{formErrors.email}}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="w-100-p">
+                    <input matInput name="phone" formControlName="phone" placeholder="{{'USER.PHONE' | translate}}">
+                    <mat-icon class="mr-8" matPrefix>phone</mat-icon>
+                  </mat-form-field>
+                  <mat-form-field class="w-100-p">
+                    <input matInput name="latestLoggedString" formControlName="latestLoggedString" placeholder="{{'USER.LASTLOGEDIN' | translate}}">
+                    <mat-icon class="mr-8" matPrefix>access_time</mat-icon>
+                  </mat-form-field>
+                </div>
+                <!--<div fxFlex='0 1 auto' class='mb-4 p-8'>-->
+                  <!--<qr-code [qRcode]='data.qRcode'></qr-code>-->
+                <!--</div>-->
+              </div>
+
+              <div class="custom-form-field">
+                <label> {{'USER.GENDER' | translate}} </label>
+                <mat-radio-group formControlName="genderId">
+                  <mat-radio-button [value]="Gender.FEMALE">{{'COMMON.FEMALE' | translate}}</mat-radio-button>
+                  <mat-radio-button [value]="Gender.MALE">{{'COMMON.MALE' | translate}}</mat-radio-button>
+                  <mat-radio-button [value]="Gender.OTHER">{{'COMMON.OTHER' | translate}}</mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <div class="custom-form-field">
+                <label>{{'USER.PASSWORD' | translate}}</label>
+                <button mat-raised-button class="mat-accent btn-small" (click)="changePassword()">
+                  <span>{{'COMMON.CHANGE' | translate}}</span>
+                </button>
+              </div>
+
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+      </form>
+
+    </div>
+    <!-- / CONTENT -->
+
+  </div>
+  <!-- / CENTER -->
+</div>

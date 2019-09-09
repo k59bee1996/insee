@@ -1,0 +1,56 @@
+//@keyframes rotating {
+//  from {
+//    transform: rotate(0deg);
+//  }
+//  to {
+//    transform: rotate(360deg);
+//  }
+//}
+
+.quagga-scanner {
+  //position: relative;
+  .viewport {
+    position: relative;
+    canvas.drawingBuffer {
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+  .setting-button {
+    position: absolute;
+    bottom: 5px;
+    //left: -48px;
+    width: 48px;
+    height: 48px;
+    line-height: 48px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0;
+    margin: 0;
+    pointer-events: auto;
+    opacity: .75;
+    z-index: 998;
+
+    mat-icon {
+      font-size: 24px;
+      //animation: rotating 3s linear infinite;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+    &.start {
+      left: 0;
+      mat-icon {
+        color: green;
+      }
+    }
+    &.stop {
+      left: 48px;
+      mat-icon {
+        color: red;
+      }
+    }
+  }
+}

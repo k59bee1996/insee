@@ -1,0 +1,73 @@
+<div class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <form name="frm" [formGroup]="frm" class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0"
+           fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+          event_note
+        </mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom
+              [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'COMMON.SYSTEMLOG' | translate}}</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-wrapper m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center" fxHide.lt-md>
+        <div fxLayoutAlign="start center">
+          <mat-form-field floatLabel="never" fxFlex="1 0 auto" class='mr-12 w-160'>
+            <input matInput formControlName="message" placeholder="{{'COMMON.MESSAGE' | translate}}">
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <div fxFlex='50' class='mr-8'>
+            <datetime-picker formControlName="createdFrom" placeholder="{{'COMMON.FROM' | translate}}"
+                             [options]='{floatLabel: "never"}'></datetime-picker>
+          </div>
+          <div fxFlex='50' class='mr-12'>
+            <datetime-picker formControlName="createdTo" placeholder="{{'COMMON.TO' | translate}}"
+                             [options]='{floatLabel: "never"}'></datetime-picker>
+          </div>
+        </div>
+        <div fxLayoutAlign="start center">
+          <!--<label for="filterChute" class="mr-8">-->
+          <!--<mat-icon class="secondary-text">view_headline</mat-icon>-->
+          <!--</label>-->
+          <mat-form-field floatLabel="never" fxFlex="1 0 auto" class='w-140'>
+            <mat-select id="logLevelId" formControlName="logLevelId"
+                        placeholder="{{'COMMON.LOGLEVEL' | translate}}">
+              <mat-option value="">{{'COMMON.ALL' | translate}}</mat-option>
+              <mat-option *ngFor="let l of logLevels" [value]="l.id">{{l.name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+      <!-- / SEARCH -->
+
+      <!--<button mat-raised-button (click)="add()" class="mat-white-bg mt-sm-0">-->
+      <!--<span>{{'COMMON.ADDNEW' | translate}}</span>-->
+      <!--</button>-->
+
+    </form>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content mat-white-bg mat-elevation-z4">
+
+      <generic-list #genericList [options]='listOptions' (onDelete)='delete($event)'
+                    (onRowClick)='rowClick($event)'></generic-list>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

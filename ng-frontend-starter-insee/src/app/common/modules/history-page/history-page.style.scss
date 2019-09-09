@@ -1,0 +1,41 @@
+history-page {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  width: 100%;
+  min-width: 100%;
+
+  .action-container {
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+  }
+
+  .action-header {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    height: 30px;
+    min-height: 30px;
+    max-height: 30px;
+    .actionActor {
+      color: #2196f3;
+      font-weight: 500;
+    }
+  }
+
+  .action-body {
+    height: 20px;
+    min-height: 20px;
+    max-height: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

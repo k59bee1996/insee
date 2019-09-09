@@ -1,0 +1,122 @@
+<div class="page-layout carded fullwidth" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0"
+           fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">group</mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'USER.USERMANAGEMENT' | translate}}</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-input-wrapper mx-12 m-md-0"
+           fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <label for="search" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+          <input id="search" matInput #filter placeholder="{{'COMMON.SEARCH'| translate}}">
+        </mat-form-field>
+      </div>
+      <!-- / SEARCH -->
+
+      <div>
+        <!--<uploader [url]="'/users/import'" (onUploaded)="import($event)"></uploader>-->
+        <button mat-raised-button (click)="add()" class="mat-white-bg">
+          <span>{{'COMMON.ADDNEW' | translate}}</span>
+        </button>
+      </div>
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content mat-white-bg mat-elevation-z4 custom-mat-row-when-click">
+
+      <mat-table #table [dataSource]="dataSource" matSort
+                 [@animateStagger]="{value:'50'}"
+                 fusePerfectScrollbar>
+
+        <!-- username Column -->
+        <ng-container cdkColumnDef="username">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>{{'USER.USERNAME' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.username}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- fullName Column -->
+        <ng-container cdkColumnDef="fullName">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header fxHide fxShow.gt-xs>{{'USER.FULLNAME' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row" fxHide fxShow.gt-xs>
+            <span class="text-truncate">{{row.fullName}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- email Column -->
+        <ng-container cdkColumnDef="email">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>{{'USER.EMAIL' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.email}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- role Column -->
+        <ng-container cdkColumnDef="userRoles">
+          <mat-header-cell *cdkHeaderCellDef>{{'USER.ROLES' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <p class="status text-truncate h6 p-4 mat-light-blue-100-bg mr-4" *ngFor="let r of row.userRoles">{{r.name}}</p>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Active Column -->
+        <ng-container cdkColumnDef="active">
+          <mat-header-cell *cdkHeaderCellDef fxHide fxShow.gt-xs>{{'COMMON.ACTIVE' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row" fxHide fxShow.gt-xs>
+            <mat-icon *ngIf="row.isActive" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+            <mat-icon *ngIf="!row.isActive" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Buttons Column -->
+        <ng-container cdkColumnDef="button2">
+          <mat-header-cell *cdkHeaderCellDef>{{'COMMON.ACTION' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <div fxFlex="row" fxLayoutAlign="start center">
+              <button mat-icon-button (click)="$event.stopPropagation();history(row.id)" aria-label="History">
+                <mat-icon>history</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row (click)="edit(row.id)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoadingResults"></mat-progress-bar>
+
+      <mat-paginator #paginator
+                     [length]="resultsLength || 0"
+                     [pageIndex]="0"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

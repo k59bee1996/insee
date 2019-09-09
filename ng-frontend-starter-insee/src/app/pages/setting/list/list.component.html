@@ -1,0 +1,52 @@
+<div class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0"
+           fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">settings</mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'SETTING.SETTINGMANAGEMENT' | translate}}</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-input-wrapper mx-12 m-md-0"
+           fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <label for="filterName" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+          <input id="filterName" matInput #filterName placeholder="{{'SETTING.NAME'| translate}}">
+        </mat-form-field>
+        <label for="filterValue" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+          <input id="filterValue" matInput #filterValue placeholder="{{'SETTING.VALUE'| translate}}">
+        </mat-form-field>
+      </div>
+      <!-- / SEARCH -->
+
+      <button mat-raised-button (click)="add()" class="mat-white-bg mt-sm-0">
+        <span>{{'COMMON.ADDNEW' | translate}}</span>
+      </button>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content mat-white-bg mat-elevation-z4">
+
+      <generic-list #genericList [options]='listOptions' (onRowClick)='edit($event)' (onDelete)='delete($event)'></generic-list>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

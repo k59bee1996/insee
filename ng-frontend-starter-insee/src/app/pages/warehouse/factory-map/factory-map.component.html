@@ -1,0 +1,59 @@
+<div class="page-layout carded fullwidth factory-map" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mr-8">location_city</mat-icon>
+            <!-- <span class="h2">{{'COMMON.FACTORY' | translate}}</span> -->
+            <span class="h2">SƠ ĐỒ NHÀ MÁY</span>
+          </div>
+          <div class="subtitle secondary-text">
+            <span>{{warehouseData.name || ''}}</span>
+          </div>
+        </div>
+        <!--<div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">-->
+          <!--<mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">g_translate</mat-icon>-->
+          <!--<span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'LANGUAGE.RESOURCEMANAGEMENT' | translate}}</span>-->
+        <!--</div>-->
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <!-- / SEARCH -->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content">
+      <div class="content-layout">
+        <div class="mat-white-bg mat-elevation-z4 map-content" fusePerfectScrollbar>
+          <location-map #locationMap *ngIf="warehouseData"
+                        [imageUrl]="warehouseData ? warehouseData.imageUrl : ''"
+                        [seats]="warehouseData.locations"
+                        [floorId]="warehouseData?.id"
+                        [floorName]="warehouseData?.name"
+                        [floorWidth]="warehouseData.width"
+                        [floorHeight]="warehouseData.height"
+                        [markerType]='MarkerType.Area'
+                        [popupOffset]='[40,40]'
+                        [zoomLevel]='3'
+                        [moveable]='true'
+                        [groups]='groups'
+                        (onSeatClicked)="locationClick($event)"></location-map>
+        </div>
+      </div>
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

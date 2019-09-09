@@ -1,0 +1,19 @@
+<div class="uploader">
+
+  <input #fileUpload hidden type="file" ngFileSelect [options]="options"
+         [accept]="accept"
+         (uploadOutput)="onUploadOutput($event); fileUpload.value = ''"
+         [uploadInput]="uploadInput"
+         [multiple]="multiple">
+
+  <button mat-raised-button (click)="fileUpload.click()" [ngClass]="buttonClass">
+    <mat-icon class='mr-4' *ngIf='showIcon'>cloud_upload</mat-icon>
+    {{buttonText | translate}}
+  </button>
+
+  <!--TODO: implement drop container if need-->
+  <!--<div class="drop-container" ngFileDrop [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" [ngClass]="{ 'is-drop-over': dragOver }">-->
+  <!--<h1>Drag &amp; Drop</h1>-->
+  <!--</div>-->
+
+</div>

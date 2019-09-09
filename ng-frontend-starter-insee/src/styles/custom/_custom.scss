@@ -1,0 +1,210 @@
+.custom-form-field {
+  width: 100%;
+  padding-bottom: 0.75em;
+  margin-bottom: 1.25em;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  position: relative;
+  text-align: left;
+  display: inline-flex;
+  align-items: baseline;
+  > label {
+    width: 150px;
+    display: inline-block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mat-radio-group {
+    .mat-radio-button + .mat-radio-button {
+      margin-left: 5px;
+    }
+  }
+  .dnd-container {
+    border: 1px solid #c5c6cb;
+    margin: 0 5px;
+    padding: 0;
+    max-height: 226px;
+    min-height: 40px;
+    overflow: hidden;
+    overflow-y: scroll;
+    .dnd-item {
+      margin: 1px;
+      padding: 5px;
+      background-color: transparent;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid #fff;
+      box-sizing: border-box;
+      cursor: move;
+    }
+    .dnd-item:hover {
+      border: 1px solid #2196f3;
+    }
+    .dnd-item:last-child {
+      border: none;
+    }
+  }
+  .dnd-container.cdk-drop-list-dragging .dnd-item:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+  }
+  .dnd-item-header {
+    padding: 5px 8px;
+    margin: 0 5px;
+    border-bottom: 1px solid #c5c6cb;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.white-label {
+  label, .mat-form-field-label {
+    color: white;
+  }
+}
+
+.white-color {
+  color: white !important;
+}
+
+.btn-large {
+  height: 54px;
+  line-height: 54px !important;
+}
+
+.btn-small {
+  height: 28px;
+  line-height: 28px !important;
+}
+
+.btn-xs {
+  height: 24px !important;
+  width: 24px !important;
+  line-height: 24px !important;
+}
+
+.font-size-150-p {
+  font-size: 150% !important;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.d-block {
+  display: block !important;
+}
+
+.custom-mat-row-when-click {
+  mat-table {
+    .mat-row:hover {
+      background-color: #e1f5fe;
+    }
+  }
+}
+
+.printJS-barcode {
+  width: 100%;
+  display: flex;
+  margin: 10px;
+  > div > div {
+    margin: 5px;
+    display: -webkit-inline-box;
+  }
+}
+
+.printBarcodeStyle {
+  border: 1px solid black;
+  border-radius: 10px;
+  width: 390px;
+  > div {
+    margin: 3px;
+  }
+  .imageBarcode {
+    > img {
+      width: 300px;
+      font-size: inherit !important;
+    }
+  }
+}
+
+.ng-select-in-material-item, .frm-order-custom {
+  .ng-select .ng-select-container .ng-value-container {
+    padding-top: 1em;
+  }
+}
+
+.margin-form-field {
+  .ng-select {
+    font-size: 13px;
+    .ng-select-container {
+      min-height: 38.5px;
+    }
+  }
+}
+
+.mat-paginator {
+  margin-top: auto;
+}
+
+.orderitem-custom-validform {
+  mat-form-field {
+    .mat-error-custom {
+      margin-top: 26px;
+    }
+  }
+}
+
+.navbar-header {
+  .mat-icon-button {
+    mat-icon {
+      color: rgba(0, 0, 0, .87)
+    }
+  }
+}
+
+.navbar-header {
+  div {
+    .logo {
+      justify-content: center !important;
+    }
+  }
+}
+
+fuse-sidebar.folded:not(.unfolded) .navbar-vertical .navbar-header {
+  padding: 0 13px;
+}
+
+.mat-secondary-bg {
+  background-color: #c5c6cb;
+}
+
+.flex-full-width {
+  flex: 1 0 100% !important;
+}
+
+.overflow-unset {
+  overflow: unset !important;
+}
+.overflow-auto {
+  overflow: auto;
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.search-menu-wrapper {
+  .mat-form-field {
+    .mat-form-field-label {
+      //color: rgba(255, 255, 255, 1);
+    }
+    .mat-form-field-prefix {
+      top: 5px;
+      margin-left: 5px;
+    }
+  }
+}
+
+#logo-icon{
+  content: url('assets/images/logos/insee_logo.png')
+}

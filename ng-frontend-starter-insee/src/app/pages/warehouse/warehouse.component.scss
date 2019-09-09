@@ -1,0 +1,48 @@
+//.map-content-fullwidth {
+//  flex: 1 0 95%;
+//  height: 100%;
+//}
+//
+//.location-content-fullwidth {
+//  flex: 1 0 100%;
+//  margin-top: 8px;
+//}
+
+.button-collapse-location-map-custom {
+  position: absolute;
+  right: -4px;
+  top: 50%;
+  min-width: 24px;
+  padding: 0;
+  //border-radius: 50%;
+  //border: 2px solid #ccc;
+  mat-icon {
+    color: #3f51b5 !important;
+    //font-size: 40px;
+    //font-weight: bold;
+    //margin-right: 15px;
+  }
+}
+
+@media (max-width: 1279px) {
+  .button-collapse-location-map-custom {
+    display: none;
+  }
+}
+
+//.content-custom-layout {
+//  .content-layout {
+//    flex-flow: wrap;
+//  }
+//}
+//
+//.page-layout-custom-position {
+//  position: inherit;
+//  .center-custom-height {
+//    position: absolute !important;
+//    height: 100%;
+//    .custom-overflow {
+//      overflow: auto;
+//    }
+//  }
+//}

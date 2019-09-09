@@ -1,0 +1,104 @@
+<div class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button class="mr-0 mr-sm-16" mat-icon-button [routerLink]="'pages/language/list'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mr-8">g_translate</mat-icon>
+            <span class="h2">{{'LANGUAGE.RESOURCEMANAGEMENT' | translate}}</span>
+          </div>
+          <div class="subtitle secondary-text">
+            <span>{{name}}</span>
+          </div>
+        </div>
+        <!--<div class="logo my-12 m-sm-0" fxLayout="row" fxLayoutAlign="start center">-->
+          <!--<mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">g_translate</mat-icon>-->
+          <!--<span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'LANGUAGE.RESOURCEMANAGEMENT' | translate}}</span>-->
+        <!--</div>-->
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-input-wrapper mx-12 m-md-0"
+           fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <label for="search" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+          <input id="search" matInput #filter placeholder="{{'COMMON.SEARCH'| translate}}">
+        </mat-form-field>
+      </div>
+      <!-- / SEARCH -->
+      <div>
+        <uploader [url]='"/localestringresources/import/" + id' (onUploaded)='import($event)' class='mr-4' accept='.json'></uploader>
+        <button mat-raised-button (click)="add()" class="mat-white-bg mt-sm-0">
+          <span>{{'COMMON.ADDNEW' | translate}}</span>
+        </button>
+      </div>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content mat-white-bg mat-elevation-z4 custom-mat-row-when-click">
+
+      <mat-table #table [dataSource]="dataSource" matSort
+                 [@animateStagger]="{value:'50'}"
+                 fusePerfectScrollbar>
+
+        <ng-container cdkColumnDef="resourceName">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>{{'LANGUAGE.RESOURCENAME' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.resourceName}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="resourceValue">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>{{'LANGUAGE.RESOURCEVALUE' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.resourceValue}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Buttons Column -->
+        <ng-container cdkColumnDef="button2">
+          <mat-header-cell *cdkHeaderCellDef>{{'COMMON.ACTION' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <div fxFlex="row" fxLayoutAlign="start center">
+              <button mat-icon-button (click)="$event.stopPropagation();delete(row.id)" aria-label="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row (click)="edit(row.id)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoadingResults"></mat-progress-bar>
+
+      <mat-paginator #paginator
+                     [length]="resultsLength || 0"
+                     [pageIndex]="0"
+                     [pageSize]="25"
+                     [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

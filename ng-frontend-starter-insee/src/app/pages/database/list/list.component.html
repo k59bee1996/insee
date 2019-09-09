@@ -1,0 +1,98 @@
+<div class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0"
+           fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">settings_backup_restore</mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'DATABASE.DATABASEMANAGEMENT' | translate}}</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <div>
+        <!--<button mat-raised-button class="mat-warn mt-sm-0" [matMenuTriggerFor]="actionMenu" (click)="$event.stopPropagation();">-->
+          <!--<span>{{'DATABASE.CLEANUP' | translate}}</span>-->
+          <!--<mat-icon>keyboard_arrow_down</mat-icon>-->
+        <!--</button>-->
+        <!--<mat-menu #actionMenu>-->
+          <!--<button mat-menu-item (click)='cleanup(6)'>6 months</button>-->
+          <!--<button mat-menu-item (click)='cleanup(12)'>1 year</button>-->
+          <!--<button mat-menu-item (click)='cleanup(24)'>2 years</button>-->
+        <!--</mat-menu>-->
+        <button mat-raised-button (click)="backup()" class="mat-white-bg mt-sm-0 ml-4">
+          <span>{{'DATABASE.BACKUP' | translate}}</span>
+        </button>
+      </div>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content mat-white-bg mat-elevation-z4">
+
+      <mat-table #table [dataSource]="dataSource"
+                 [@animateStagger]="{value:'50'}"
+                 fusePerfectScrollbar>
+
+        <ng-container cdkColumnDef="name">
+          <mat-header-cell *cdkHeaderCellDef>{{'DATABASE.NAME' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.name}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="createdOn">
+          <mat-header-cell *cdkHeaderCellDef>{{'DATABASE.CREATEDON' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.createdOn | date: pipe.fullDateTime}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="createdBy">
+          <mat-header-cell *cdkHeaderCellDef>{{'DATABASE.CREATEDBY' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.createdBy}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Buttons Column -->
+        <ng-container cdkColumnDef="button2">
+          <mat-header-cell *cdkHeaderCellDef>{{'COMMON.ACTION' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <div fxFlex="row" fxLayoutAlign="start center">
+              <button mat-icon-button (click)="$event.stopPropagation();restore(row)" aria-label="Restore">
+                <mat-icon>restore</mat-icon>
+              </button>
+              <button mat-icon-button (click)="$event.stopPropagation();delete(row.id)" aria-label="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoadingResults"></mat-progress-bar>
+
+      <mat-paginator #paginator
+                     [length]="resultsLength || 0"
+                     [pageIndex]="0"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

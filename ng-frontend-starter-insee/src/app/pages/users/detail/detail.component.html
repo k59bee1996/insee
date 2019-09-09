@@ -1,0 +1,181 @@
+<div class="page-layout carded fullwidth">
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+
+        <button class="mr-0 mr-sm-16" mat-icon-button [routerLink]="'pages/user-management/users'">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div fxLayout="column" fxLayoutAlign="start start"
+             *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div class="h2" *ngIf="pageType ==='edit'">
+            {{data.username}}
+          </div>
+          <div class="h2" *ngIf="pageType ==='new'">
+            {{'USER.NEWUSER' | translate}}
+          </div>
+          <div class="subtitle secondary-text" *ngIf="pageType === 'edit'">
+            <span>{{'USER.USERDETAIL' | translate}}</span>
+          </div>
+        </div>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- BUTTONS -->
+      <div>
+        <button mat-raised-button class="mat-light-green-bg"
+                [disabled]="frm.invalid" promise-btn [promiseButton]="saveOb"
+                *ngIf="pageType ==='new'" (click)="add()">
+          <span>{{'COMMON.SAVE' | translate}}</span>
+        </button>
+        <button mat-raised-button class="mat-warn-bg mr-4"
+                *ngIf="pageType ==='edit'" (click)="delete()">
+          <span>{{'COMMON.DELETE' | translate}}</span>
+        </button>
+        <button mat-raised-button class="mat-light-green-bg" promise-btn [promiseButton]="saveOb"
+                [disabled]="frm.invalid || frm.pristine" *ngIf="pageType ==='edit'" (click)="save()">
+          <span>{{'COMMON.SAVE' | translate}}</span>
+        </button>
+      </div>
+      <!-- / BUTTONS -->
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT -->
+    <div class="content mat-white-bg mat-elevation-z4" fusePerfectScrollbar>
+
+      <form name="frm" [formGroup]="frm" class="w-100-p" fxLayout="column" fxFlex>
+
+        <mat-tab-group>
+
+          <mat-tab label="{{'COMMON.GENERALINFORMATION' | translate}}">
+            <div class="tab-content p-24">
+              <div fxLayout="row" [fxLayout.lt-md]="'row wrap'" class="w-100-p">
+                <div fxFlex='1 1 auto' fxLayout='row wrap' fxLayoutAlign='space-between'>
+                  <mat-form-field fxFlex='49%' fxFlex.sm="100%">
+                    <input matInput name="username" formControlName="username" placeholder="{{'USER.USERNAME' | translate}}" required>
+                    <mat-error *ngIf="formErrors.username">
+                      {{formErrors.username}}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex='49%' fxFlex.sm="100%">
+                    <input matInput name="fullName" formControlName="fullName" placeholder="{{'USER.FULLNAME' | translate}}">
+                    <mat-error *ngIf="formErrors.fullName">
+                      {{formErrors.fullName}}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex='49%' fxFlex.sm="100%">
+                    <input matInput name="email" formControlName="email" placeholder="{{'USER.EMAIL' | translate}}">
+                    <mat-error *ngIf="formErrors.email">
+                      {{formErrors.email}}
+                    </mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex='49%' fxFlex.sm="100%">
+                    <input matInput name="phone" formControlName="phone" placeholder="{{'USER.PHONE' | translate}}">
+                    <mat-error *ngIf="formErrors.phone">{{formErrors.phone}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field fxFlex='49%' fxFlex.sm="100%">
+                    <mat-select formControlName="warehouseId" placeholder="{{'WAREHOUSE' | translate}}">
+                      <mat-option *ngFor="let w of warehouseList" [value]="w.id">{{w.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field fxFlex='49%' fxFlex.sm="100%">
+                    <input matInput name="position" formControlName="position" placeholder="{{'USER.POSITION' | translate}}">
+                    <mat-error *ngIf="formErrors.position">
+                      {{formErrors.position}}
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxFlex='0 1 auto' *ngIf="pageType === 'edit' && data.qrCode" class='p-8'>
+                  <qr-code [qRcode]='data.qrCode' [name]='data.fullName || data.username'></qr-code>
+                </div>
+              </div>
+              <div class="custom-form-field" fxLayout='column'>
+                <label>{{'USER.USERROLES' | translate}}</label>
+                <div class='w-100-p' fxLayout="row" fxLayoutAlign="start start" fxLayout.sm='row wrap'>
+                  <div fxFlex='50' fxFlex.sm="100">
+                    <div class='dnd-item-header mat-accent-bg'>
+                      {{'COMMON.AVAILABLE' | translate}}
+                      <button mat-icon-button class='btn-xs' (click)='moveAvailable()'><mat-icon>chevron_right</mat-icon></button>
+                    </div>
+                    <div class="dnd-container" fusePerfectScrollbar
+                         cdkDropList
+                         #cdkRoleList="cdkDropList"
+                         [cdkDropListData]="roleList"
+                         [cdkDropListConnectedTo]="[cdkRoleSelected]"
+                         (cdkDropListDropped)="drop($event)">
+                      <div class="dnd-item mat-accent-50-bg" cdkDrag *ngFor='let p of roleList; let i = index'>
+                        {{p.name}}
+                        <button mat-icon-button class='btn-xs' (click)='moveAvailable(i)'><mat-icon>chevron_right</mat-icon></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div fxFlex='50' fxFlex.sm="100">
+                    <div class='dnd-item-header mat-accent-bg'>
+                      <button mat-icon-button class='btn-xs' (click)='moveSelected()'><mat-icon>chevron_left</mat-icon></button>
+                      {{'COMMON.SELECTED' | translate}}
+                    </div>
+                    <div class="dnd-container" fusePerfectScrollbar
+                         cdkDropList
+                         #cdkRoleSelected="cdkDropList"
+                         [cdkDropListData]="roleSelected"
+                         [cdkDropListConnectedTo]="[cdkRoleList]"
+                         (cdkDropListDropped)="drop($event)">
+                      <div class="dnd-item mat-accent-50-bg" cdkDrag *ngFor='let p of roleSelected; let i = index'>
+                        <button mat-icon-button class='btn-xs' (click)='moveSelected(i)'><mat-icon>chevron_left</mat-icon></button>
+                        {{p.name}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="custom-form-field">
+                <label>{{'USER.GENDER' | translate}}</label>
+                <mat-radio-group formControlName="genderId">
+                  <mat-radio-button [value]="Gender.FEMALE">{{'COMMON.FEMALE' | translate}}</mat-radio-button>
+                  <mat-radio-button [value]="Gender.MALE">{{'COMMON.MALE' | translate}}</mat-radio-button>
+                  <mat-radio-button [value]="Gender.OTHER">{{'COMMON.OTHER' | translate}}</mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <div class="custom-form-field">
+                <label>{{'COMMON.ACTIVE' | translate}}</label>
+                <mat-checkbox formControlName="isActive"></mat-checkbox>
+              </div>
+
+              <div class="custom-form-field" *ngIf="pageType === 'edit'">
+                <label>{{'USER.PASSWORD' | translate}}</label>
+                <button mat-raised-button class="mat-warn-bg btn-small" (click)="resetPassword()"
+                        promise-btn [promiseButton]="resetPassOb">
+                  <span>{{'USER.RESETPASSWORD' | translate}}</span>
+                </button>
+              </div>
+              <!--<div fxLayoutAlign='space-around'>-->
+                <!--<div class='user-qrCode-custom' fxLayout='column' fxLayoutAlign='center'>-->
+                  <!--<label *ngIf='urlQrCode' >{{'USER.SCANQRCODE' | translate}}</label>-->
+                  <!--<label *ngIf='!urlQrCode'>{{'USER.NOQRCODE' | translate}}</label>-->
+                  <!--<img *ngIf='urlQrCode' src={{urlQrCode}} >-->
+                <!--</div>-->
+              <!--</div>-->
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+      </form>
+
+    </div>
+    <!-- / CONTENT -->
+
+  </div>
+  <!-- / CENTER -->
+</div>

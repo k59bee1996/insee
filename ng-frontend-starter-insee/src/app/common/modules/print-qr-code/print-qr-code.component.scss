@@ -1,0 +1,19 @@
+@import "~print-js/dist/print.css";
+
+print-qr-code {
+  width: 100%;
+  .printJS-qrcode {
+    width: 100%;
+    margin: 10px;
+    .printWrapper {
+      > div {
+        width: 100%;
+      }
+    }
+    .imageBarcode {
+      > img {
+        font-size: inherit !important;
+      }
+    }
+  }
+}

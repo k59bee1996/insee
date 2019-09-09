@@ -1,0 +1,96 @@
+<div class='w-100-p overflow-auto' fusePerfectScrollbar>
+  <table mat-table #table [dataSource]="dataSource" matSort [class.table-hover]='options.rowClickable' [ngClass]='tableClass'>
+
+    <ng-container [matColumnDef]="c.name" *ngFor='let c of options.columns'>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!c.ordering" [fxHide.lt-sm]='c.responsive'>
+        {{c.title | translate}}
+      </th>
+      <td mat-cell *matCellDef="let row" [fxHide.lt-sm]='c.responsive'>
+        <span class="text-truncate" *ngIf='!c.type || c.type === "text"'>{{row[c.name]}}</span>
+        <span class="text-truncate" *ngIf='c.type === "translate"'>{{row[c.name] | translate}}</span>
+        <span class="text-truncate" *ngIf='c.type === "link"'>
+          <a class='cursor-pointer' (click)="$event.stopPropagation();clickRow(row)">{{row[c.name]}}</a>
+        </span>
+        <span class="text-truncate" *ngIf='c.type === "date"'>{{row[c.name] | date: pipe.fullDate}}</span>
+        <span class="text-truncate" *ngIf='c.type === "datetime"'>{{row[c.name] | date: 'dd/MM/yyyy HH:mm'}}</span>
+        <div *ngIf='c.type === "boolean"'>
+          <mat-icon *ngIf="row[c.name]" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+          <mat-icon *ngIf="!row[c.name]" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+        </div>
+        <div *ngIf='c.type === "image_url" || c.type === "image_binary"'>
+          <a *ngIf='row[c.name]' (click)='openImageDialog(row[c.name], c.type)' class='cursor-pointer'>{{'COMMON.SHOWIMAGE' | translate}}</a>
+          <span *ngIf='!row[c.name]'>{{'COMMON.NOIMAGE' | translate}}</span>
+        </div>
+        <div *ngIf='c.type === "image_sm"'>
+          <img class='image_sm' [src]='domain + (row[c.name] || "assets/images/No-image-found.jpg")'>
+        </div>
+        <div *ngIf='c.type === "status"'>
+          <span class="h6 p-4 mr-4" [ngClass]="getStatusColor(row[c.name])">{{row[c.name] | translate}}</span>
+        </div>
+        <div *ngIf='c.type === "dropdown"'>
+          <mat-select [value]='row[c.name]' (selectionChange)='selectionChange(row, $event)' (click)='$event.stopPropagation();'>
+            <mat-option *ngFor="let option of c.dropdown" [value]="option.id">
+              {{option.name | translate}}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div *ngIf='c.type === "attribute"'>
+          <div *ngFor='let o of row[c.name]'>{{o.name}}: {{o.specificationAttributeOptionName}}</div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- Buttons Column -->
+    <ng-container [matColumnDef]="options.actionButtons" *ngIf='options.actionButtons'>
+      <th mat-header-cell *matHeaderCellDef>{{'COMMON.ACTION' | translate}}</th>
+      <td mat-cell *matCellDef="let row">
+        <div fxFlex="row" fxLayoutAlign="start center">
+
+          <ng-template #actionButtons>
+            <button mat-icon-button (click)="$event.stopPropagation();clickExtraButton(row)" aria-label="Extra link"
+                    *ngIf='options.extraButton'>
+              <mat-icon>{{options.extraButton?.icon || 'link'}}</mat-icon>
+            </button>
+            <button mat-icon-button (click)="$event.stopPropagation();clickEdit(row)" aria-label="Edit"
+                    *ngIf='!options.hideEdit'>
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button (click)="$event.stopPropagation();clickDelete(row.id)" aria-label="Delete"
+                    *ngIf='!options.hideDelete'>
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button (click)="$event.stopPropagation();clickHistory(row.id)" aria-label="History"
+                    *ngIf='!options.hideHistory'>
+              <mat-icon>history</mat-icon>
+            </button>
+          </ng-template>
+          <div fxLayoutAlign='start start' fxShow fxHide.lt-md>
+            <ng-container *ngTemplateOutlet="actionButtons"></ng-container>
+          </div>
+          <button mat-icon-button fxHide.gt-sm [matMenuTriggerFor]="moreMenu" (click)="$event.stopPropagation();"
+                  aria-label="More">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #moreMenu="matMenu" fxHide.gt-sm>
+            <ng-container *ngTemplateOutlet="actionButtons"></ng-container>
+          </mat-menu>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="$event.stopPropagation();clickRow(row)"></tr>
+
+  </table>
+  <div class='text-center secondary-text pt-8' *ngIf='!isLoadingResults && (!dataSource || !dataSource.data || !dataSource.data.length)'>{{'COMMON.NODATA' | translate}}</div>
+</div>
+<div class="total_price" *ngIf='total && !isLoadingResults'>{{'TOTAL' | translate}}: <span class="total_price_value">{{total}}</span></div>
+<mat-progress-bar mode="indeterminate" *ngIf="isLoadingResults"></mat-progress-bar>
+
+<mat-paginator #paginator [class.hidden]='!options.pagination'
+               [length]="resultsLength || 0"
+               [pageIndex]="0"
+               [pageSize]="25"
+               [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

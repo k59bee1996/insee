@@ -1,0 +1,12 @@
+<div class="page-layout carded fullwidth">
+  <div id='printJS-qrcode' class='printJS-qrcode'>
+    <div class='printWrapper'>
+      <div class='barcodeWrapper' *ngFor="let item of barcodeInfo; let last = last">
+        <div class='imageBarcode' [style.width]="barcodeWidth +'px'">
+          <img [width]='barcodeWidth' src={{item.url}} (domChange)="onDomChange($event, last)">
+          <div class='text-center-printed'>{{item.name || item.barcode}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

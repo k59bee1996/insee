@@ -1,0 +1,108 @@
+<div class="page-layout carded fullwidth" fusePerfectScrollbar>
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+      <!-- APP TITLE -->
+      <div class="logo my-12 m-sm-0"
+           fxLayout="row" fxLayoutAlign="start center">
+        <mat-icon class="logo-icon mr-16" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">language</mat-icon>
+        <span class="logo-text h1" *fuseIfOnDom [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">{{'LANGUAGE.LANGUAGEMANAGEMENT' | translate}}</span>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <div class="search-input-wrapper mx-12 m-md-0"
+           fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+        <label for="search" class="mr-8">
+          <mat-icon class="secondary-text">search</mat-icon>
+        </label>
+        <mat-form-field floatLabel="never" fxFlex="1 0 auto">
+          <input id="search" matInput #filter placeholder="{{'COMMON.SEARCH'| translate}}">
+        </mat-form-field>
+      </div>
+      <!-- / SEARCH -->
+
+      <button mat-raised-button (click)="add()" class="mat-white-bg mt-sm-0">
+        <span>{{'COMMON.ADDNEW' | translate}}</span>
+      </button>
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content mat-white-bg mat-elevation-z4 custom-mat-row-when-click">
+
+      <mat-table #table [dataSource]="dataSource" matSort
+                 [@animateStagger]="{value:'50'}"
+                 fusePerfectScrollbar>
+
+        <ng-container cdkColumnDef="name">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>{{'LANGUAGE.NAME' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.name}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container cdkColumnDef="languageCulture">
+          <mat-header-cell *cdkHeaderCellDef mat-sort-header>{{'LANGUAGE.LOCALIZATIONNAME' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <span class="text-truncate">{{row.languageCulture}}</span>
+          </mat-cell>
+        </ng-container>
+
+        <!--<ng-container cdkColumnDef="flagImageFileName">-->
+          <!--<mat-header-cell *cdkHeaderCellDef>{{'LANGUAGE.FLAG' | translate}}</mat-header-cell>-->
+          <!--<mat-cell *cdkCellDef="let row">-->
+            <!--<span class="text-truncate">{{row.flagImageFileName}}</span>-->
+          <!--</mat-cell>-->
+        <!--</ng-container>-->
+
+        <!-- Active Column -->
+        <ng-container cdkColumnDef="active">
+          <mat-header-cell *cdkHeaderCellDef>{{'COMMON.ACTIVE' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <mat-icon *ngIf="row.isActive" class="active-icon mat-green-600-bg s-16">check</mat-icon>
+            <mat-icon *ngIf="!row.isActive" class="active-icon mat-red-500-bg s-16">close</mat-icon>
+          </mat-cell>
+        </ng-container>
+
+        <!-- Buttons Column -->
+        <ng-container cdkColumnDef="button3">
+          <mat-header-cell *cdkHeaderCellDef>{{'COMMON.ACTION' | translate}}</mat-header-cell>
+          <mat-cell *cdkCellDef="let row">
+            <div fxFlex="row" fxLayoutAlign="start center">
+              <button mat-icon-button (click)="$event.stopPropagation();delete(row.id)" aria-label="Delete">
+                <mat-icon>delete</mat-icon>
+              </button>
+              <button mat-icon-button (click)="$event.stopPropagation();manage(row.id)" aria-label="Manage">
+                <mat-icon>g_translate</mat-icon>
+              </button>
+            </div>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *cdkHeaderRowDef="displayedColumns"></mat-header-row>
+
+        <mat-row (click)="edit(row.id)" *cdkRowDef="let row; columns: displayedColumns;"></mat-row>
+
+      </mat-table>
+
+      <mat-progress-bar mode="indeterminate" *ngIf="isLoadingResults"></mat-progress-bar>
+
+      <mat-paginator #paginator
+                     [length]="resultsLength || 0"
+                     [pageIndex]="0"
+                     [pageSize]="10"
+                     [pageSizeOptions]="[5, 10, 25, 100]">
+      </mat-paginator>
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

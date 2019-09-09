@@ -1,0 +1,40 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es5",
+    "paths": {
+      "@fuse/*": [
+        "app/themes/@fuse/*"
+      ],
+      "app/*": [
+        "app/themes/app/*"
+      ],
+      "@common/*": [
+        "app/common/*"
+      ],
+      "@services/*": [
+        "app/common/services/*"
+      ],
+      "@modules/*": [
+        "app/common/modules/*"
+      ],
+      "@pages/*": [
+        "app/pages/*"
+      ]
+    },
+    "typeRoots": [
+      "node_modules/@types"
+    ],
+    "lib": [
+      "es2017",
+      "dom"
+    ]
+  }
+}

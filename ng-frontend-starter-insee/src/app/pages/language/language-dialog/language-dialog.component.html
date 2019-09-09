@@ -1,0 +1,48 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title" *ngIf="id">{{'LANGUAGE.EDITLANGUAGE' | translate}}</span>
+      <span class="title dialog-title" *ngIf="!id">{{'LANGUAGE.ADDLANGUAGE' | translate}}</span>
+      <button mat-button class="mat-icon-button" (click)="dialogRef.close(false)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div mat-dialog-content fusePerfectScrollbar>
+    <form name="frm" [formGroup]="frm" class="w-100-p">
+
+      <mat-form-field class="w-100-p">
+        <input matInput name="name" formControlName="name" placeholder="{{'LANGUAGE.NAME' | translate}}" required>
+        <mat-error *ngIf="formErrors.name">
+          {{formErrors.name}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100-p">
+        <input matInput name="languageCulture" formControlName="languageCulture" placeholder="{{'LANGUAGE.LOCALIZATIONNAME' | translate}}" required>
+        <mat-error *ngIf="formErrors.languageCulture">
+          {{formErrors.languageCulture}}
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="w-100-p">
+        <input matInput name="displayOrder" formControlName="displayOrder" placeholder="{{'COMMON.DISPLAYORDER' | translate}}">
+        <mat-error *ngIf="formErrors.displayOrder">
+          {{formErrors.displayOrder}}
+        </mat-error>
+      </mat-form-field>
+
+      <div class="custom-form-field">
+        <label>{{'COMMON.ACTIVE' | translate}}</label>
+        <mat-checkbox formControlName="isActive"></mat-checkbox>
+      </div>
+
+    </form>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="mat-accent" (click)="save()"
+            [disabled]="frm.invalid || (frm.pristine && id)"
+            promise-btn [promiseButton]="saveOb">{{'COMMON.SAVE' | translate}}</button>
+    <button mat-raised-button (click)="dialogRef.close(false)">{{'COMMON.CLOSE' | translate}}</button>
+  </div>
+</div>

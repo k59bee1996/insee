@@ -1,0 +1,15 @@
+<mat-form-field class='datetime-form-field' [floatLabel]="options.floatLabel || 'auto'">
+  <input matInput [(ngModel)]="value" readonly (click)="datepicker.open()"
+         (dateChange)='dateChange($event)'
+         [matDatepicker]="datepicker"
+         [placeholder]="placeholder">
+  <mat-datepicker-toggle matSuffix [for]="datepicker">
+    <mat-icon matDatepickerToggleIcon class='font-size-21'>date_range</mat-icon>
+  </mat-datepicker-toggle>
+  <mat-datepicker #datepicker></mat-datepicker>
+  <w-mat-timepicker matSuffix [color]="options.color" [(userTime)]='time'
+                    (userTimeChange)='timeChange($event)'></w-mat-timepicker>
+  <button type="button" mat-button matSuffix class="mat-icon-button" (click)="clearDate()" *ngIf='value'>
+    <mat-icon class="font-size-21">clear</mat-icon>
+  </button>
+</mat-form-field>

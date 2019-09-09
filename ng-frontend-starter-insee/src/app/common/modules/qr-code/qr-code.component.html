@@ -1,0 +1,7 @@
+<div fxLayout='row wrap' fxLayoutAlign='center start' [style.width]='canvasSize + "px" '>
+  <canvas id="qr-canvas" #qrcanvas></canvas>
+  <div *ngIf='!qRcode' class='text-center w-100-p'>{{'COMMON.NOCODE' | translate}}</div>
+  <button *ngIf='qRcode' mat-raised-button class="mat-accent" (click)='printQrCode()'>
+    <span>{{'COMMON.PRINTQRCODE' | translate}}</span>
+  </button>
+</div>

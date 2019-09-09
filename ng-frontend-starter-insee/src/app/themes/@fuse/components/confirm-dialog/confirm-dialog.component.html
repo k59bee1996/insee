@@ -1,0 +1,18 @@
+<!--<h1 matDialogTitle>{{'CONFIRM' | translate}}</h1>-->
+<!--<div class="dialog_content">-->
+  <!--<div mat-dialog-content>{{confirmMessage}}</div>-->
+  <!--<div style="width: 100%" mat-dialog-actions class="dialog-theme pt-24">-->
+    <!--<button mat-raised-button color="primary" (click)="dialogRef.close(true)">{{'YES' | translate}}</button>-->
+    <!--<button mat-raised-button color="warn" (click)="dialogRef.close(false)">{{'CANCEL' | translate}}</button>-->
+  <!--</div>-->
+<!--</div>-->
+<div class="dialog-content-wrapper">
+  <h1 matDialogTitle>{{'CONFIRM' | translate}}</h1>
+  <div mat-dialog-content>
+    <div class="confirm-message">{{confirmMessage}}</div>
+  </div>
+  <div mat-dialog-actions class="">
+    <button mat-raised-button class='mat-green-bg white-color' (click)="dialogRef.close(true)">{{'YES' | translate}}</button>
+    <button mat-raised-button (click)="dialogRef.close(false)">{{'CANCEL' | translate}}</button>
+  </div>
+</div>

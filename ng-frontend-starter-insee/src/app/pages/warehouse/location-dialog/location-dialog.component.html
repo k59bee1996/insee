@@ -1,0 +1,135 @@
+<div class="dialog-content-wrapper">
+  <mat-toolbar matDialogTitle class="mat-accent m-0">
+    <mat-toolbar-row fxLayout="row" fxLayoutAlign="space-between center">
+      <span class="title dialog-title" *ngIf="id">{{'LOCATION.EDITLOCATION' | translate}}</span>
+      <span class="title dialog-title" *ngIf="!id">{{'LOCATION.ADDLOCATION' | translate}}</span>
+      <button mat-button class="mat-icon-button" (click)="dialogRef.close(false)">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar-row>
+  </mat-toolbar>
+  <div mat-dialog-content fusePerfectScrollbar>
+    <form name="frm" [formGroup]="frm" class="w-100-p">
+
+      <mat-form-field class="w-50-p">
+        <input matInput name="name" formControlName="name" placeholder="{{'LOCATION.NAME' | translate}}" required>
+        <mat-error *ngIf="formErrors.name">
+          {{formErrors.name}}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-50-p">
+        <mat-select name='locationStatusId' formControlName='locationStatusId' placeholder="{{'LOCATION.STATUS' | translate}}">
+          <mat-option *ngFor='let s of statusList' [value]='s.id'>{{s.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="w-50-p">
+        <input matInput name="line" formControlName="line" placeholder="{{'LOCATION.LINE' | translate}}">
+      </mat-form-field>
+      <mat-form-field class="w-50-p">
+        <input matInput name="cell" formControlName="cell" placeholder="{{'LOCATION.CELL' | translate}}">
+      </mat-form-field>
+      <mat-form-field class="w-50-p">
+        <input matInput name="area" formControlName="area" placeholder="{{'LOCATION.AREA' | translate}}">
+      </mat-form-field>
+      <mat-form-field class="w-50-p">
+        <input matInput name="row" formControlName="row" placeholder="{{'LOCATION.ROW' | translate}}">
+      </mat-form-field>
+
+      <!--<mat-form-field class="w-100-p">-->
+        <!--<mat-select name='locationTypeId' formControlName='locationTypeId' placeholder="{{'LOCATION.TYPE' | translate}}">-->
+          <!--<mat-option *ngFor='let t of typeList' [value]='t.id'>{{t.name}}</mat-option>-->
+        <!--</mat-select>-->
+      <!--</mat-form-field>-->
+
+      <!--<mat-form-field class="w-100-p">-->
+        <!--<input matInput type='color' name="colorCode" formControlName="colorCode" placeholder="{{'LOCATION.COLOR' | translate}}">-->
+      <!--</mat-form-field>-->
+
+      <!--<div class="custom-form-field">-->
+        <!--<label>{{'LOCATION.COLOR' | translate}}</label>-->
+        <!--<input [(colorPicker)]="data.colorCode" [style.background]="data.colorCode" (colorPickerChange)='onSelectColor($event)' readonly/>-->
+        <!--&lt;!&ndash;<fuse-material-color-picker [(selectedBg)]="data.colorCode" (onValueChange)="onSelectColor($event)">&ndash;&gt;-->
+        <!--&lt;!&ndash;</fuse-material-color-picker>&ndash;&gt;-->
+      <!--</div>-->
+    </form>
+    <div *ngIf="productList.length" class="location-product-table">
+      <table>
+        <thead>
+          <tr>
+            <th>{{'PRODUCT.NAME' | translate}}</th>
+            <th>{{'PRODUCT.QUANTITY' | translate}}</th>
+            <th style='width: 100px'>{{'PRODUCT.EXPIRYDATE' | translate}}</th>
+            <th style='width: 60px'>{{'ITEM.ONHOLD' | translate}}</th>
+            <th>{{'ITEM.NOTE' | translate}}</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let p of productList">
+            <td>
+              <span *ngIf="!p.isEditing">{{p.productCode + ' - ' + p.productName}}</span>
+              <span *ngIf="p.isEditing" (click)="selectProduct(p)" class="cursor-pointer">{{p.productCode + ' - ' + p.productName}}</span>
+            </td>
+            <td>
+              <!--<span>{{p.quantity}}</span>-->
+              <input type="number" style='width: 80px'
+                     step=".1"
+                     limit-to="9"
+                     [(ngModel)]="p.quantity"
+                     [disabled]='!p.isEditing'
+                     #quantity="ngModel"
+                     required>
+            </td>
+            <td>
+              <span *ngIf="!p.isEditing">{{p.expiryDate | date: 'dd/MM/yyyy'}}</span>
+              <div *ngIf="p.isEditing">
+                <input matInput [(ngModel)]="p.expiryDate" readonly (click)="datepicker.open()"
+                       [matDatepicker]="datepicker">
+                <mat-datepicker #datepicker></mat-datepicker>
+              </div>
+            </td>
+            <td>
+              <div style='margin-top: -1px'>
+                <mat-checkbox [(ngModel)]="p.onHold"
+                              [disabled]='!p.isEditing'></mat-checkbox>
+              </div>
+              <!--<input type="checkbox"-->
+                     <!--[(ngModel)]="p.onHold"-->
+                     <!--[disabled]='!p.isEditing'>-->
+            </td>
+            <td>
+              <div *ngIf="!p.isEditing">{{p.note}}</div>
+              <input *ngIf="p.isEditing"
+                     type="text" style='width: 120px'
+                     [(ngModel)]="p.note"
+                     [disabled]='!p.isEditing'>
+            </td>
+            <td class='text-nowrap'>
+              <button *ngIf="p.isEditing"
+                mat-icon-button (click)="$event.stopPropagation(); saveItem(p)"
+                aria-label="Save">
+                <mat-icon>save</mat-icon>
+              </button>
+              <button *ngIf="!p.isEditing" mat-icon-button (click)="$event.stopPropagation(); p.isEditing = true" aria-label="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button *ngIf="p.isEditing" (click)="$event.stopPropagation(); cancelEdit(p)" aria-label="Cancel">
+                <mat-icon>cancel</mat-icon>
+              </button>
+              <button mat-icon-button (click)="$event.stopPropagation();print(p)" aria-label="Print">
+                <mat-icon>print</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-raised-button class="mat-accent" (click)="save()"
+            [disabled]="frm.invalid || (frm.pristine && id)"
+            promise-btn [promiseButton]="saveOb">{{'COMMON.SAVE' | translate}}</button>
+    <button mat-raised-button (click)="dialogRef.close(false)">{{'COMMON.CLOSE' | translate}}</button>
+  </div>
+</div>

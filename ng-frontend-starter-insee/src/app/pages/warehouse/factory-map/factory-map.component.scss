@@ -1,0 +1,16 @@
+@import "../../../themes/@fuse/scss/fuse";
+
+.factory-map {
+  > .center {
+    .content {
+      padding: 0 5px;
+      margin: 0 -5px;
+      .content-layout {
+        height: 100%;
+      }
+    }
+    .map-content {
+      height: 100%;
+    }
+  }
+}

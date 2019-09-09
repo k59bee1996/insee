@@ -1,0 +1,97 @@
+<div class="page-layout carded fullwidth warehouse-list" fusePerfectScrollbar>
+
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg mat-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- CENTER -->
+  <div class="center center-custom-height">
+
+    <!-- HEADER -->
+    <div class="header white-fg" fxLayout="row" fxLayoutAlign="space-between center">
+
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="start center">
+        <button class="mr-0 mr-sm-16" mat-icon-button (click)='goBack()'>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+        <div fxLayout="column" fxLayoutAlign="start start" *fuseIfOnDom
+          [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          <div fxLayout="row" fxLayoutAlign="start center">
+            <mat-icon class="mr-8">home</mat-icon>
+            <span class="h2">{{'WAREHOUSE.MANAGEMENT' | translate}}</span>
+          </div>
+          <!-- <div class="subtitle secondary-text">
+            <span [innerHTML]='warehouseData.name || ""'></span>
+          </div> -->
+        </div>
+      </div>
+      <!-- / APP TITLE -->
+
+      <!-- SEARCH -->
+      <!-- <div class="search-wrapper m-md-0" fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="center center">
+        <mat-form-field floatLabel="never" fxFlex="auto" class=''>
+          <mat-icon matPrefix>search</mat-icon>
+          <input id="search" matInput #filter placeholder="{{'COMMON.SEARCHPRODUCT'| translate}}">
+        </mat-form-field>
+      </div> -->
+      <!-- / SEARCH -->
+
+      <!--<button mat-raised-button (click)="add()" class="mat-white-bg mt-sm-0">-->
+      <!--<span>{{'COMMON.ADDNEW' | translate}}</span>-->
+      <!--</button>-->
+
+    </div>
+    <!-- / HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class='content overflow-unset'>
+      <div class="content-layout">
+        <mat-tab-group class="mat-white-bg">
+          <mat-tab [label]="warehouseData.name">
+            <div class='mat-white-bg mat-elevation-z4 map-content'
+              [ngClass]="showColumnLayout ? 'flex-full-width' : ''">
+              <ng-template matTabContent>
+                <location-map  *ngIf="warehouseData && warehouseData.id"
+                [imageUrl]="warehouseData ? warehouseData.imageUrl : ''" [seats]="warehouseData.locations"
+                [floorId]="warehouseData?.id" [floorName]="warehouseData?.name" [floorWidth]="warehouseData.width"
+                [floorHeight]="warehouseData.height" [popupOffset]='[30,30]' [moveable]="true"
+                [zoomLevel]='3' (onSeatClicked)="rowClick($event)" [markerType]="warehouseData.MarkerType"
+                (onAddNewSeat)="add($event)"></location-map>
+              </ng-template>
+
+              
+              <!-- <button mat-raised-button class='button-collapse-location-map-custom'
+                (click)='showColumnLayout = !showColumnLayout; locationMap.resize();'>
+                <mat-icon *ngIf='showColumnLayout === false'>keyboard_arrow_right</mat-icon>
+                <mat-icon *ngIf='showColumnLayout === true'>keyboard_arrow_left</mat-icon>
+              </button> -->
+            </div>
+          </mat-tab>
+          <mat-tab [label]="layoutData.name">
+            <div class='mat-white-bg mat-elevation-z4 map-content' 
+              [ngClass]="showColumnLayout ? 'flex-full-width':''">
+              <ng-template matTabContent>
+                <location-map  *ngIf="layoutData && layoutData.id"
+                [imageUrl]="layoutData ? layoutData.imageUrl : ''" [seats]="layoutData.locations"
+                [floorId]="layoutData?.id" [floorName]="layoutData?.name" [floorWidth]="layoutData.width"
+                [floorHeight]="layoutData.height" [popupOffset]='[30,30]' [markerType]="layoutData.MarkerType" [editable]=true [moveable]=isAdmin
+                [zoomLevel]='3'  (onSeatClicked)="rowClick($event)"
+                (onAddNewSeat)="add($event)"></location-map>
+              </ng-template>
+              
+            </div>
+          </mat-tab>
+
+        </mat-tab-group>
+
+        <!-- <div class='mat-white-bg mat-elevation-z4 list-content' [ngClass]="showColumnLayout ? 'flex-full-width' : ''"> -->
+        <!--<div class="mat-white-bg mat-elevation-z4 list-content" fusePerfectScrollbar>-->
+        <!-- <generic-list #genericList [options]='listOptions' (onRowClick)='edit($event.id)'></generic-list> -->
+        <!-- </div> -->
+      </div>
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+</div>

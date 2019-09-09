@@ -1,0 +1,14 @@
+<div class='quagga-scanner'>
+  <div style="position: relative; display: inline-block">
+    <div #viewport class='viewport'>
+      <button *ngIf='debug' mat-icon-button class="setting-button start mat-primary-bg mat-elevation-z2"
+              (click)="init()">
+        <mat-icon>play_arrow</mat-icon>
+      </button>
+      <button *ngIf='debug' mat-icon-button class="setting-button stop mat-primary-bg mat-elevation-z2"
+              (click)="stop()">
+        <mat-icon>stop</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

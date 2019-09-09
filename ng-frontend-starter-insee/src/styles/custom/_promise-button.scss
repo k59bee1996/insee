@@ -1,0 +1,31 @@
+button.loading {
+  position: relative;
+  padding-right: 40px;
+  &:after {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    margin-top: -10px;
+    margin-left: -10px;
+    border-radius: 50%;
+    border: 2px solid #ccc;
+    border-top-color: #333;
+    animation: spinner .6s linear infinite;
+  }
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-default.disabled, .btn-default:disabled {
+  &:hover {
+    cursor: not-allowed;
+  }
+}

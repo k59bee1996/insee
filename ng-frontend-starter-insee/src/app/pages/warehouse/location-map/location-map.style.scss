@@ -1,0 +1,173 @@
+@import "~leaflet/dist/leaflet.css";
+@import "~leaflet-draw/dist/leaflet.draw.css";
+@import "~leaflet-contextmenu/dist/leaflet.contextmenu.css";
+
+@keyframes flash {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: .1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.circle-on-selected {
+  -webkit-animation: flash linear 0.4s infinite;
+  animation: flash linear 0.4s infinite;
+}
+
+.map-container {
+  min-height: 450px;
+}
+.leaflet-popup {
+  margin-bottom: 25px;
+  pointer-events: none;
+}
+.leaflet-popup-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.animated-icon {
+  transition: all 0.5s, transform 0s;
+}
+
+.leaflet-control a:hover {
+  text-decoration: none !important;
+}
+
+.legend.leaflet-control {
+  margin: 0;
+  padding: 5px;
+  background-color: #e0f2f1;
+  border-radius: 5px;
+  border: 2px solid rgba(0,0,0,0.2);
+  min-width: 38px;
+  min-height: 40px;
+  //border-bottom-left-radius: 5px;
+  //border-left: 2px solid rgba(0,0,0,0.2);
+  //border-bottom: 2px solid rgba(0,0,0,0.2);
+}
+
+location-map {
+  .map-wrapper {
+    position: relative;
+    font-size: 1.3rem;
+    perspective: 3000px;
+    padding: 4px;
+  }
+  .debug-info {
+    position: absolute;
+    bottom: 5px;
+    right: 7px;
+    font-size: 10px;
+    color: #666;
+    z-index: 401;
+  }
+  .leaflet-tooltip {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    table {
+      font-size: 11px;
+      td {
+        vertical-align: top;
+        white-space: pre-wrap
+      }
+    }
+  }
+  .legend .info{
+    line-height: 18px;
+    color: #555;
+    font-weight: bold;
+    max-width: 300px;
+  }
+  .legend .info i {
+    width: 10px;
+    height: 10px;
+    float: left;
+    margin: 4px 5px 0 0;
+    opacity: 0.7;
+    border-radius: 50%;
+  }
+  .legend .info table{
+    width: 250px;
+    max-width: 300px;
+    min-width: 200px;
+  }
+
+  .legend .info table tr{
+    border: 5px solid #e0f2f1;;
+    border-collapse: collapse;
+    line-height: 3.5em;
+  }
+
+
+  i.custom-icon-button {
+    position: relative;
+    top: 3px;
+  }
+  .legend-container {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+  }
+  .legend .collapseButton {
+    width: 36px;
+    cursor: pointer;
+    position: absolute;
+    left: calc(50% - 18px);
+  }
+  .legend .collapseButton.collapse {
+    height: 20px;
+    width: 36px;
+    bottom: -14px;
+    background-color: #e0f2f1;
+    border-radius: 2px;
+    border: 1px solid rgba(0,0,0,0.2);
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+    .mat-icon {
+      min-height: 20px;
+      max-height: 20px;
+      margin-top: -3px;
+      color: #3f51b5 !important;
+    }
+  }
+  .leaflet-popup-content {
+    width: auto !important;
+    .map-location-name {
+      white-space: nowrap;
+      margin-bottom: 4px;
+    }
+    .map-product-table {
+      //overflow-y: auto;
+      //max-height: 363px;
+      table {
+        margin-bottom: 0;
+        width: 100%;
+        border-spacing: 0;
+        th {
+          font-weight: 500;
+          padding: 2px 4px;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+        td {
+          padding: 1px 4px;
+          white-space: nowrap;
+        }
+        tr {
+          th:first-child, td:first-child {
+            padding-left: 0;
+          }
+          th:last-child, td:last-child {
+            padding-right: 0;
+          }
+        }
+      }
+    }
+  }
+}
+
